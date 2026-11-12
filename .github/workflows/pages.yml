@@ -1,0 +1,45 @@
+name: Deploy static site to GitHub Pages
+
+# Publishes the repository root as-is. The prototype is plain HTML, CSS and
+# JS with no build step, so the whole directory is uploaded unchanged.
+#
+# This workflow is what publishes the site when the repository's Pages
+# source is set to "GitHub Actions". If the source is instead set to
+# "Deploy from a branch", the branch deployment takes over and this
+# workflow is simply unused.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
