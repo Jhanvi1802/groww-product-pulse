@@ -6,7 +6,7 @@ customer explanation** for whichever fee users are most confused by. Both are
 then logged through **approval-gated MCP tool calls** - nothing is written or
 drafted until a human approves the exact payload.
 
-**Live prototype:** _(see submission form)_
+**Live prototype:** https://jhanvi1802.github.io/groww-product-pulse/
 **Product:** Groww | **Corpus:** 12,300 public Google Play reviews, 16 Aug - 8 Nov 2026
 
 ---
