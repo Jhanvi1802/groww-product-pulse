@@ -1,0 +1,51 @@
+# Groww - Weekly Product Pulse (internal notes)
+
+
+---
+
+## Entry appended 2026-11-12 (approved by Jhanvi Chaturvedi (PM))
+
+**Week of:** 12 Nov 2026
+
+**Top themes:** App reliability & order execution | Charges & fee transparency | Support unresponsive
+
+**Identified fee issue:** Brokerage on an equity order
+
+# Weekly Product Pulse — Groww
+**Week of 12 Nov 2026** | 12,300 public Play Store reviews, 2026-08-16 to 2026-11-08
+
+## Top themes
+1. **App reliability & order execution** — 216 reviews, 64% rated 1-2 star
+2. **Charges & fee transparency** — 189 reviews, 68% rated 1-2 star
+3. **Support unresponsive** — 177 reviews, 83% rated 1-2 star
+
+## What users said
+> "poor services, order placing gets stuck. many times loss booked due to platform inconvenience. even..."
+> — 1★ 2026-09-18, 111 upvotes
+
+> "Very bad experience. Too many hidden charges.... interphase is Good. But Not for intraday or small..."
+> — 1★ 2026-08-19, 18 upvotes
+
+> "customer support is very bad . Human agents are not replying in chat and there is a very large time of..."
+> — 1★ 2026-09-07, 14 upvotes
+
+## Key observation
+Volume is not the whole story: **support unresponsive** has the worst negative rate at 83%. Within charges, **brokerage on equity orders** is named in 71 of 189 reviews. The complaint is rarely the amount — it is that the number was not predictable before the order.
+
+## Three things we could do
+1. Show a **pre-trade cost breakdown** on the order screen: brokerage, STT, stamp duty, exchange, SEBI and GST as separate lines.
+2. Add a **"why was I charged this?"** link on every contract note, deep-linked to the matching pricing row.
+3. Route charge-pattern reviews to a **support macro** built from the explainer below, so the answer never varies.
+
+
+### Fee explainer
+- Groww charges the **lower of ₹20 or 0.1% of the order value** per executed order, not a flat ₹20. The stated minimum is the lower of ₹5 or 2.5% of trade value.
+- It is charged **per executed order**. Several orders in one day each carry their own brokerage, so a day of active trading totals well above ₹20.
+- For **delivery**, brokerage applies to **both the buy and the sell** leg. This is the single most common misreading in the reviews.
+- Statutory and exchange levies are charged **on top of brokerage**: STT (0.1% on buy and sell for delivery; 0.025% on the sell leg for intraday), stamp duty (0.015% on buy for delivery, 0.003% intraday), exchange transaction charges (NSE 0.00307%, BSE 0.00375%) and the SEBI turnover fee (0.0001%).
+- **GST at 18%** applies to brokerage, DP, exchange and SEBI charges — but **not** to STT or stamp duty.
+- Selling from **delivery** also attracts a **DP charge**: ₹16.5 from Groww plus the depository’s ₹3.5 (₹3.25 for women investors), plus GST. Account opening and annual maintenance are listed at ₹0.
+
+**Sources:**
+- https://groww.in/pricing
+- https://groww.in/help/payments-&-withdrawals/payments-charges/why-is-my-brokerage-more-than-20-rupees--71

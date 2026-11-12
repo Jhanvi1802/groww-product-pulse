@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Product Pulse Workflow</title>
+<style>
+  :root{
+    --bg:#EDF1F5; --card:#FFFFFF; --card2:#FAFCFD;
+    --ink:#0D1520; --ink2:#46556A; --ink3:#8292A6;
+    --line:#E1E8F0; --line2:#EEF2F7;
+    --brand:#00B386; --brand2:#00D19B; --brandDeep:#00795C;
+    --brandFill:#E6F8F2; --brandLine:#B2E8D7;
+    --warn:#B06A00; --warnFill:#FFF6E6; --warnLine:#F0D8A6;
+    --stop:#C0362C; --stopFill:#FDEDEB; --stopLine:#F2C7C2;
+    --info:#2563C9; --infoFill:#EAF1FD; --infoLine:#C2D7F7;
+    --sh1:0 1px 2px rgba(13,21,32,.05);
+    --sh2:0 2px 5px rgba(13,21,32,.05), 0 8px 18px rgba(13,21,32,.07);
+    --sh3:0 10px 22px rgba(13,21,32,.10), 0 22px 48px rgba(13,21,32,.10);
+    --shBrand:0 6px 16px rgba(0,179,134,.28), 0 2px 5px rgba(0,179,134,.20);
+    --r:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#070B10; --card:#121A23; --card2:#17212B;
+      --ink:#E9EFF6; --ink2:#A6B5C6; --ink3:#71818F;
+      --line:#222E3A; --line2:#1A242F;
+      --brand:#2BDDA8; --brand2:#4FEBBC; --brandDeep:#17A87E;
+      --brandFill:#0C2C22; --brandLine:#1B5341;
+      --warn:#E0A647; --warnFill:#2A2114; --warnLine:#4A3A1E;
+      --stop:#F28A7E; --stopFill:#2C1816; --stopLine:#4E2723;
+      --info:#6FA4F5; --infoFill:#111F33; --infoLine:#24405F;
+      --sh1:0 1px 2px rgba(0,0,0,.4);
+      --sh2:0 2px 5px rgba(0,0,0,.45), 0 8px 18px rgba(0,0,0,.4);
+      --sh3:0 10px 24px rgba(0,0,0,.55), 0 22px 54px rgba(0,0,0,.45);
+      --shBrand:0 6px 18px rgba(43,221,168,.22), 0 2px 5px rgba(43,221,168,.18);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#070B10; --card:#121A23; --card2:#17212B;
+    --ink:#E9EFF6; --ink2:#A6B5C6; --ink3:#71818F;
+    --line:#222E3A; --line2:#1A242F;
+    --brand:#2BDDA8; --brand2:#4FEBBC; --brandDeep:#17A87E;
+    --brandFill:#0C2C22; --brandLine:#1B5341;
+    --warn:#E0A647; --warnFill:#2A2114; --warnLine:#4A3A1E;
+    --stop:#F28A7E; --stopFill:#2C1816; --stopLine:#4E2723;
+    --info:#6FA4F5; --infoFill:#111F33; --infoLine:#24405F;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; color:var(--ink);
+    background:
+      radial-gradient(1100px 520px at 10% -8%, rgba(0,179,134,.10), transparent 60%),
+      radial-gradient(900px 460px at 94% 2%, rgba(37,99,201,.07), transparent 58%),
+      var(--bg);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input,select,textarea{ font:inherit; color:inherit; }
+  a{ color:var(--brand); }
+  code,pre{ font-family:ui-monospace,"Cascadia Mono",Consolas,"Courier New",monospace; }
+
+  .wrap{ max-width:900px; margin:0 auto; padding:0 16px 60px; }
+
+  header{ padding:26px 0 8px; }
+  .brandrow{ display:flex; align-items:center; gap:11px; flex-wrap:wrap; }
+  .mark{
+    width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;color:#fff;flex:none;
+    background:linear-gradient(145deg,var(--brand2),var(--brandDeep));
+    box-shadow:var(--shBrand), inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  h1{ margin:0; font-size:20px; letter-spacing:-.02em; }
+  .pill{
+    font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    padding:3px 9px;border-radius:20px;white-space:nowrap;
+    background:var(--brandFill);color:var(--brand);border:1px solid var(--brandLine);
+  }
+  .pill.blue{ background:var(--infoFill); color:var(--info); border-color:var(--infoLine); }
+  .lede{ margin:11px 0 0; color:var(--ink2); font-size:14px; max-width:70ch; }
+  .meta{ margin:7px 0 0; color:var(--ink3); font-size:12.5px; }
+
+  .steps{ display:flex; gap:6px; margin:20px 0 0; flex-wrap:wrap; }
+  .stepchip{
+    font-size:12px;font-weight:650;padding:6px 11px;border-radius:9px;
+    background:var(--card);border:1px solid var(--line);color:var(--ink3);box-shadow:var(--sh1);
+  }
+  .stepchip.done{ color:var(--brand); border-color:var(--brandLine); background:var(--brandFill); }
+
+  section.card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--sh2);margin-top:18px;overflow:hidden;
+  }
+  .chead{
+    padding:14px 18px;border-bottom:1px solid var(--line2);
+    background:linear-gradient(180deg,var(--card2),var(--card));
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .cnum{
+    width:23px;height:23px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;
+    font-size:11.5px;font-weight:800;background:var(--brandFill);color:var(--brand);border:1px solid var(--brandLine);
+  }
+  .chead h2{ margin:0;font-size:14.5px;letter-spacing:-.01em; }
+  .chead .sub{ color:var(--ink3);font-size:12px;margin-left:auto; }
+  .cbody{ padding:16px 18px; }
+
+  table.themes{ width:100%; border-collapse:collapse; }
+  table.themes th{
+    text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink3);padding:0 8px 7px 0;border-bottom:1px solid var(--line);font-weight:800;
+  }
+  table.themes td{ padding:9px 8px 9px 0; border-bottom:1px solid var(--line2); font-size:13.5px; vertical-align:middle; }
+  table.themes tr:last-child td{ border-bottom:none; }
+  tr.istop td{ background:var(--brandFill); }
+  tr.istop td:first-child{ box-shadow:inset 3px 0 0 var(--brand); padding-left:9px; }
+  .rank{ font-size:10.5px;font-weight:800;color:var(--brand); }
+  .bar{ height:7px;border-radius:5px;background:var(--line);overflow:hidden;min-width:70px; }
+  .bar i{ display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--brand2),var(--brandDeep)); }
+  .neg{ font-size:12px;color:var(--ink3); }
+
+  blockquote.q{
+    margin:0 0 11px;padding:11px 14px;border-radius:0 10px 10px 0;
+    background:var(--card2);border-left:3px solid var(--brand);
+  }
+  blockquote.q p{ margin:0;font-size:13.5px;line-height:1.5;font-style:italic; }
+  blockquote.q .by{ margin-top:6px;font-size:11.5px;color:var(--ink3);font-style:normal; }
+  blockquote.q .th{ font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--brand);margin-bottom:5px; }
+
+  .callout{
+    border-radius:11px;padding:12px 14px;font-size:13.5px;line-height:1.55;
+    background:var(--warnFill);border:1px solid var(--warnLine);color:var(--ink2);
+  }
+  .callout b{ color:var(--warn); }
+  .callout.blue{ background:var(--infoFill);border-color:var(--infoLine); }
+  .callout.blue b{ color:var(--info); }
+
+  .doc{
+    background:var(--card2);border:1px solid var(--line);border-radius:11px;
+    padding:15px 17px;font-size:13.5px;line-height:1.6;
+  }
+  .doc h3{ margin:14px 0 7px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--brand); }
+  .doc h3:first-child{ margin-top:0; }
+  .doc ul{ margin:0 0 8px;padding-left:19px; }
+  .doc li{ margin-bottom:5px; }
+  .doc ol{ margin:0;padding-left:19px; }
+  .wordcount{ font-size:11.5px;color:var(--ink3);margin-top:9px; }
+  .wordcount b{ color:var(--brand); }
+
+  pre.json{
+    background:var(--card2);border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;font-size:11.5px;line-height:1.5;overflow-x:auto;margin:0;
+    color:var(--ink2);max-height:260px;
+  }
+
+  .toolcall{ border:1px solid var(--line);border-radius:11px;margin-bottom:11px;overflow:hidden; }
+  .toolhead{ padding:11px 14px;background:var(--card2);display:flex;align-items:center;gap:9px;flex-wrap:wrap; }
+  .toolname{ font-family:ui-monospace,Consolas,monospace;font-size:12.5px;font-weight:700;color:var(--info); }
+  .tooldesc{ font-size:12px;color:var(--ink3);width:100%; }
+  .toolbody{ padding:12px 14px; }
+
+  .gate{
+    border:2px dashed var(--warnLine);background:var(--warnFill);
+    border-radius:12px;padding:15px 17px;margin-top:4px;
+  }
+  .gate h3{ margin:0 0 6px;font-size:14px;color:var(--warn); }
+  .gate p{ margin:0 0 11px;font-size:13px;color:var(--ink2); }
+  .gaterow{ display:flex;gap:9px;align-items:center;flex-wrap:wrap; }
+  .gaterow input[type=text]{
+    flex:1;min-width:170px;padding:9px 12px;border-radius:9px;
+    border:1px solid var(--line);background:var(--card);
+  }
+  .gaterow input[type=text]:focus{ outline:none;border-color:var(--brand); }
+  label.chk{ display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);margin-bottom:11px;cursor:pointer; }
+
+  .btn{ cursor:pointer;font-weight:650;font-size:13.5px;padding:10px 17px;border-radius:10px;border:1px solid transparent;
+        transition:transform .12s, box-shadow .12s, filter .12s; }
+  .btn:disabled{ opacity:.45;cursor:not-allowed; }
+  .btn.go{ color:#fff;background:linear-gradient(145deg,var(--brand2),var(--brandDeep));box-shadow:var(--shBrand); }
+  .btn.go:not(:disabled):hover{ transform:translateY(-1.5px);filter:brightness(1.05); }
+  .btn.ghost{ background:var(--card);border-color:var(--line);color:var(--ink2);box-shadow:var(--sh1); }
+  .btn.ghost:hover{ transform:translateY(-1.5px);box-shadow:var(--sh2);color:var(--ink); }
+  .btn.danger{ background:var(--stopFill);border-color:var(--stopLine);color:var(--stop); }
+
+  .result{ border-radius:11px;padding:12px 14px;font-size:13px;margin-bottom:10px; }
+  .result.ok{ background:var(--brandFill);border:1px solid var(--brandLine); }
+  .result.err{ background:var(--stopFill);border:1px solid var(--stopLine); }
+  .result .rt{ font-weight:700;margin-bottom:4px; }
+  .result.ok .rt{ color:var(--brand); }
+  .result.err .rt{ color:var(--stop); }
+
+  pre.out{
+    background:#0C1219;color:#D6E3F0;border-radius:10px;padding:13px 15px;
+    font-size:11.5px;line-height:1.55;overflow-x:auto;margin:0;max-height:330px;
+  }
+  :root[data-theme="light"] pre.out, :root:not([data-theme="dark"]) pre.out{ background:#0C1219; }
+
+  .tabs{ display:flex;gap:4px;margin-bottom:11px;flex-wrap:wrap; }
+  .tabs button{
+    cursor:pointer;font-size:12.5px;font-weight:650;padding:7px 13px;border-radius:9px;
+    background:var(--card2);border:1px solid var(--line);color:var(--ink3);
+  }
+  .tabs button.on{ background:var(--brandFill);border-color:var(--brandLine);color:var(--brand); }
+
+  .audit{ font-size:11.5px;color:var(--ink3);margin-top:11px; }
+  .audit div{ padding:3px 0;border-bottom:1px solid var(--line2);font-family:ui-monospace,Consolas,monospace; }
+
+  footer{ margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.6; }
+
+  @media (max-width:560px){
+    .chead .sub{ margin-left:0;width:100%; }
+    h1{ font-size:17px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brandrow">
+      <div class="mark">PP</div>
+      <h1>Product Pulse Workflow</h1>
+      <span class="pill">Groww</span>
+      <span class="pill blue">MCP approval-gated</span>
+    </div>
+    <p class="lede">Turns raw app-store reviews into a weekly internal pulse and a reusable customer explanation for whichever fee users are most confused by - then logs both through approval-gated MCP tool calls.</p>
+    <p class="meta" id="corpusmeta">Loading corpus...</p>
+    <div class="steps" id="stepchips"></div>
+  </header>
+
+  <!-- STEP 1 -->
+  <section class="card">
+    <div class="chead"><div class="cnum">1</div><h2>Review Intelligence Layer</h2>
+      <span class="sub" id="s1sub"></span></div>
+    <div class="cbody">
+      <table class="themes" id="themetable"></table>
+      <div style="margin-top:16px" id="quotes"></div>
+      <div id="feecallout"></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card">
+    <div class="chead"><div class="cnum">2</div><h2>Weekly Product Pulse</h2>
+      <span class="sub" id="s2sub"></span></div>
+    <div class="cbody">
+      <div class="doc" id="pulsedoc"></div>
+      <div class="wordcount" id="pulsewords"></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card">
+    <div class="chead"><div class="cnum">3</div><h2>Fee Explainer</h2>
+      <span class="sub" id="s3sub"></span></div>
+    <div class="cbody">
+      <div class="doc" id="feedoc"></div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="card">
+    <div class="chead"><div class="cnum">4</div><h2>MCP actions - awaiting your approval</h2>
+      <span class="sub" id="s4sub"></span></div>
+    <div class="cbody">
+      <div class="callout blue" style="margin-bottom:14px">
+        <b>Nothing has run yet.</b> Both tool calls below are prepared but not executed. The MCP host refuses any call whose arguments lack <code>approved: true</code> - try the refusal button to see it bite.
+      </div>
+
+      <div id="toolcalls"></div>
+
+      <div class="gate" id="gate">
+        <h3>Approval required</h3>
+        <p>Review both payloads above. Approving runs <code>append_to_doc</code> and <code>create_email_draft</code>. The email is written as a draft and is never sent.</p>
+        <label class="chk"><input type="checkbox" id="ack"> I have reviewed both payloads</label>
+        <div class="gaterow">
+          <input type="text" id="approver" placeholder="Your name, recorded in the audit log" autocomplete="off">
+          <button class="btn go" id="approve" disabled>Approve &amp; run</button>
+          <button class="btn danger" id="tryunapproved">Try without approval</button>
+          <button class="btn ghost" id="resetbtn">Reset</button>
+        </div>
+      </div>
+
+      <div id="mcpout" style="margin-top:16px"></div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script src="data/corpus.js"></script>
+<script src="pipeline.js"></script>
+<script src="generators.js"></script>
+<script src="mcp-browser.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
