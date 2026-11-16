@@ -110,15 +110,15 @@ node mcp-server/server.mjs      # JSON-RPC 2.0 over stdio
 
 Approval is enforced in **two independent places**, and both refuse by default.
 
-### In the prototype - Step 4
+### In the prototype - the Publish section
 
 Both tool calls are rendered with their **full JSON payload** before anything
 runs. The Approve button stays disabled until you have:
 
-1. ticked *"I have reviewed both payloads"*, and
+1. ticked *"I have reviewed what these will write"*, and
 2. entered a name, which is recorded in the audit log
 
-There is also a **"Try without approval"** button. It issues both calls with
+There is also a **"Try without approving"** button. It issues both calls with
 the `approved` flag missing. Both are refused, nothing is written, and the
 rejections appear in the audit log. The gate is demonstrable, not asserted.
 
@@ -167,7 +167,7 @@ data/corpus.js  (1,581 substantive reviews, from 12,300)
   Step 2  generators.js  weekly pulse, <= 250 words
   Step 3  generators.js  fee explainer, <= 6 bullets, 2 official links, "Last checked"
       |
-  Step 4  approval gate  <-- a human approves the exact payloads here
+  Publish  approval gate  <-- a human approves the exact payloads here
       |
       +-- append_to_doc        -> product-pulse-doc.md + doc-entry.json
       +-- create_email_draft   -> email-draft.txt   (never sent)
