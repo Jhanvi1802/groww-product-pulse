@@ -74,7 +74,7 @@
   $('s1sub').textContent = A.analysed.toLocaleString() + ' detailed reviews grouped';
   var tbl = $('themetable');
   tbl.innerHTML = '<tr><th>Theme</th><th style="width:80px">Reviews</th>' +
-                  '<th style="width:150px">Share of complaints</th><th style="width:110px">Unhappy</th></tr>';
+                  '<th style="width:150px">Share of reviews</th><th style="width:110px">Rated 1-2 star</th></tr>';
   var max = A.themes[0].count;
   A.themes.forEach(function (t, i) {
     var tr = el('tr', i < 3 ? 'top' : '');
