@@ -21,7 +21,7 @@
     return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
   }
   function words(s) {
-    return (s.replace(/[#*>|\-]/g, ' ').match(/[A-Za-z0-9â‚¹%.,']+/g) || []).length;
+    return (s.replace(/[#*>|\-]/g, ' ').match(/[A-Za-z0-9\u20B9%.,']+/g) || []).length;
   }
   function trimQuote(t, max) {
     t = t.replace(/\s+/g, ' ').trim();
@@ -42,12 +42,12 @@
         'It is charged **per executed order**. Several orders in one day each carry their own brokerage, so a day of active trading totals well above ₹20.',
         'For **delivery**, brokerage applies to **both the buy and the sell** leg. This is the single most common misreading in the reviews.',
         'Statutory and exchange levies are charged **on top of brokerage**: STT (0.1% on buy and sell for delivery; 0.025% on the sell leg for intraday), stamp duty (0.015% on buy for delivery, 0.003% intraday), exchange transaction charges (NSE 0.00307%, BSE 0.00375%) and the SEBI turnover fee (0.0001%).',
-        '**GST at 18%** applies to brokerage, DP, exchange and SEBI charges — but **not** to STT or stamp duty.',
-        'Selling from **delivery** also attracts a **DP charge**: ₹16.5 from Groww plus the depository’s ₹3.5 (₹3.25 for women investors), plus GST. Account opening and annual maintenance are listed at ₹0.'
+        '**GST at 18%** applies to brokerage, DP, exchange and SEBI charges - but **not** to STT or stamp duty.',
+        'Selling from **delivery** also attracts a **DP charge**: ₹16.5 from Groww plus the depository\'s ₹3.5 (₹3.25 for women investors), plus GST. Account opening and annual maintenance are listed at ₹0.'
       ],
       sources: [
-        { label: 'Groww — Pricing and charges', url: 'https://groww.in/pricing' },
-        { label: 'Groww Help — Why is my brokerage more than 20 rupees?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/why-is-my-brokerage-more-than-20-rupees--71' }
+        { label: 'Groww - Pricing and charges', url: 'https://groww.in/pricing' },
+        { label: 'Groww Help - Why is my brokerage more than 20 rupees?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/why-is-my-brokerage-more-than-20-rupees--71' }
       ]
     },
     amc: {
@@ -55,12 +55,12 @@
       whyConfusing: 'Reviewers expect a recurring demat maintenance fee.',
       bullets: [
         'Groww lists **₹0 account opening** and **₹0 maintenance** charges for the trading and demat account.',
-        'Charges that do apply are **per transaction** — brokerage, DP charges on delivery sells, and statutory levies.',
+        'Charges that do apply are **per transaction** - brokerage, DP charges on delivery sells, and statutory levies.',
         'A recurring debit is therefore more likely a DP charge on a sell, not an annual maintenance fee.'
       ],
       sources: [
-        { label: 'Groww — Pricing and charges', url: 'https://groww.in/pricing' },
-        { label: 'Groww Help — What fees does Groww charge?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/what-fees-does-groww-charge--58' }
+        { label: 'Groww - Pricing and charges', url: 'https://groww.in/pricing' },
+        { label: 'Groww Help - What fees does Groww charge?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/what-fees-does-groww-charge--58' }
       ]
     },
     dp: {
@@ -68,13 +68,13 @@
       whyConfusing: 'Reviewers see a flat debit on selling that is unrelated to order size.',
       bullets: [
         'A **DP (depository participant) charge** applies **per sell transaction** from delivery holdings, regardless of order value.',
-        'It is **₹16.5 from Groww** plus the depository’s **₹3.5** (₹3.25 for women investors), plus 18% GST.',
+        'It is **₹16.5 from Groww** plus the depository\'s **₹3.5** (₹3.25 for women investors), plus 18% GST.',
         'Groww lists **₹0** for its own portion where the debit value is under ₹100.',
         'There is **no DP charge on intraday**, because no shares leave the demat account.'
       ],
       sources: [
-        { label: 'Groww — Pricing and charges', url: 'https://groww.in/pricing' },
-        { label: 'Groww Help — What fees does Groww charge?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/what-fees-does-groww-charge--58' }
+        { label: 'Groww - Pricing and charges', url: 'https://groww.in/pricing' },
+        { label: 'Groww Help - What fees does Groww charge?', url: 'https://groww.in/help/payments-&-withdrawals/payments-charges/what-fees-does-groww-charge--58' }
       ]
     },
     squareoff: {
@@ -86,8 +86,8 @@
         'Normal brokerage and statutory levies still apply to the squared-off trade.'
       ],
       sources: [
-        { label: 'Groww — Pricing and charges', url: 'https://groww.in/pricing' },
-        { label: 'Groww Help — What are intraday charges?', url: 'https://groww.in/help/stocks,-f&o,-ipo-&-mtf/sx-pricing/what-are-intraday-charges' }
+        { label: 'Groww - Pricing and charges', url: 'https://groww.in/pricing' },
+        { label: 'Groww Help - What are intraday charges?', url: 'https://groww.in/help/stocks,-f&o,-ipo-&-mtf/sx-pricing/what-are-intraday-charges' }
       ]
     }
   };
@@ -99,18 +99,18 @@
     var meta = a.meta;
 
     var themeLine = t.map(function (x, i) {
-      return (i + 1) + '. **' + x.name + '** — ' + x.count + ' reviews, ' + x.negRate + '% rated 1-2 star';
+      return (i + 1) + '. **' + x.name + '** - ' + x.count + ' reviews, ' + x.negRate + '% rated 1-2 star';
     }).join('\n');
 
     var quoteLines = q.map(function (x) {
-      return '> "' + trimQuote(x.text, 105) + '"\n> — ' + x.rating + '★ ' + x.date + ', ' + x.upvotes + ' upvotes';
+      return '> "' + trimQuote(x.text, 105) + '"\n> - ' + x.rating + '-star ' + x.date + ', ' + x.upvotes + ' upvotes';
     }).join('\n\n');
 
     var chargeTotal = a.themes.filter(function (x) { return x.name.indexOf('Charges') === 0; })[0].count;
     var obs =
       'Volume is not the whole story: **' + t[2].name.toLowerCase() + '** has the worst negative rate at ' +
       t[2].negRate + '%. Within charges, **' + fee.label.toLowerCase() + '** is named in ' + fee.count +
-      ' of ' + chargeTotal + ' reviews. The complaint is rarely the amount — it is that the number ' +
+      ' of ' + chargeTotal + ' reviews. The complaint is rarely the amount - it is that the number ' +
       'was not predictable before the order.';
 
     var actions = [
@@ -120,7 +120,7 @@
     ];
 
     var md =
-      '# Weekly Product Pulse — Groww\n' +
+      '# Weekly Product Pulse - Groww\n' +
       '**Week of ' + d + '** | ' + meta.total_reviews.toLocaleString() + ' public Play Store reviews, ' +
       meta.window_start + ' to ' + meta.window_end + '\n\n' +
       '## Top themes\n' + themeLine + '\n\n' +

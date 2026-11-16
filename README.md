@@ -205,7 +205,7 @@ rate, which volume alone would hide.
 - **Collected:** 9 Nov 2026, paging the newest-first review feed to the 12-week boundary
 - **Window:** 16 Aug 2026 - 8 Nov 2026, exactly **12.0 weeks** (the brief asks for 8-12)
 - **Volume:** 12,300 reviews, de-duplicated by review id
-- **Rating mix:** 1★ 1,307 | 2★ 196 | 3★ 331 | 4★ 1,004 | 5★ 9,462
+- **Rating mix:** 1-star 1,307 | 2-star 196 | 3-star 331 | 4-star 1,004 | 5-star 9,462
 
 **Why only 1,581 are analysed.** The median review is **9 characters** long -
 overwhelmingly "Good", "Nice", "Best app". Reviews under 60 characters cannot
@@ -280,7 +280,7 @@ cites them rather than the pricing table alone.
    sentiment model is used, so sarcasm and mixed reviews are not detected.
 
 5. **Play Store reviews are a biased sample.** They skew to the delighted and
-   the furious - 77% are 5★ and 11% are 1★, with little in between. These are
+   the furious - 77% are 5-star and 11% are 1-star, with little in between. These are
    signals to investigate, not a measure of the user base.
 
 6. **One platform.** Android only. iOS reviews may differ.
