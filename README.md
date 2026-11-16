@@ -142,6 +142,45 @@ requirement is visible to any MCP client through `tools/list`. A tool that can
 be called without approval is not gated, it is merely polite - so the UI
 collects the approval and the server enforces it.
 
+### Attaching it to a real MCP client
+
+The server is a standard stdio MCP server, so any MCP-capable client can load
+it. For a client that reads a JSON config, the entry is:
+
+```json
+{
+  "mcpServers": {
+    "groww-product-pulse": {
+      "command": "node",
+      "args": ["<absolute-path-to-repo>/mcp-server/server.mjs"]
+    }
+  }
+}
+```
+
+Once attached, `tools/list` returns both tools with their schemas, and
+`approved` appears in each `required` array - so the client can see the
+approval requirement before calling anything.
+
+To watch the raw protocol instead, `node mcp-server/test-client.mjs` runs a
+full handshake, discovery and both gated calls over actual stdio.
+
+### What is and is not MCP here
+
+Being exact, because it matters:
+
+- **`mcp-server/server.mjs` is a real MCP server.** JSON-RPC 2.0 over stdio,
+  implementing `initialize`, `tools/list`, `tools/call` and `ping`. It is
+  protocol-compliant and driven over real stdio by the test client.
+- **The hosted prototype does not speak MCP over the wire.** A static page
+  cannot spawn a stdio process, so `mcp-browser.js` mirrors the same two tools,
+  the same input schemas and the same approval rule in-page. That is the
+  brief's third option - a simulated approval step - implemented so the gate is
+  enforced in code rather than by disabling a button.
+
+The brief allows any of three approaches and asks only that an approval step
+precede any action. The hosted page meets that; the stdio server goes past it.
+
 ### The two tools
 
 | Tool | Does | Never does |
